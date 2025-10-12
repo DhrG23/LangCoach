@@ -1,0 +1,652 @@
+/* style.css: Cyberpunk-inspired theme (FINAL REVISION) */
+:root {
+    --primary-color: #00eaff;
+    --neon-glow: #1e90ff;
+    --neon-button: #00eaff;
+    --bg-color: #0d1217;
+    --card-bg: rgba(13, 18, 23, 0.95);
+    --border-color: rgba(30, 144, 255, 0.4);
+    --text-color: #e6f7ff;
+    --muted-text: #8fa3b7;
+    --success-color: #4CAF50;
+    --warning-color: #FFC300;
+    --danger-color: #E74C3C;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Share Tech Mono', monospace;
+}
+
+/* Overall App Container */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    margin: 0; padding: 0;
+    overflow: hidden;
+}
+.app-container {
+    width: 95%;
+    height: calc(100vh - 80px);
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    padding-bottom: 10px;
+}
+
+/* --- Layout Grid for Main Content --- */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    height: 100%; 
+}
+
+.left-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+}
+
+/* RIGHT PANEL: Ensures scroll for cut-off content */
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto; /* FIX: Added scrollbar for overflow content */
+    padding-right: 5px; 
+    padding-bottom: 30px;
+    height: 100%; 
+}
+
+/* Scrollbar Styling (Right Panel) - No Change */
+.right-panel::-webkit-scrollbar { width: 8px; }
+.right-panel::-webkit-scrollbar-track { background: var(--bg-color); }
+.right-panel::-webkit-scrollbar-thumb { 
+    background: var(--primary-color); 
+    border-radius: 4px;
+    border: 1px solid var(--neon-glow);
+}
+.right-panel::-webkit-scrollbar-thumb:hover { background: var(--neon-glow); }
+
+/* Headers, Title Bar - No Change */
+.title-bar {
+    -webkit-app-region: drag;
+    display: flex; justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 5px 15px;
+    border-bottom: 2px solid var(--neon-glow);
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+    height: 30px;
+}
+.title-text {
+    color: var(--neon-glow);
+    font-family: var(--font-heading);
+    font-size: 1.2em;
+    text-shadow: 0 0 5px var(--neon-glow);
+    user-select: none;
+}
+.window-controls button {
+    -webkit-app-region: no-drag;
+    background: transparent; border: none;
+    color: var(--muted-text);
+    font-size: 1.2em; margin-left: 10px;
+    padding: 2px 6px;
+    cursor: pointer;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+.window-controls button:hover {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-color);
+}
+header h1 {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 2.8em;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--neon-glow), 0 0 20px rgba(30, 144, 255, 0.5);
+    margin-top: 0;
+}
+.tagline {
+    text-align: center;
+    color: var(--muted-text);
+    font-style: italic;
+    margin-top: -10px;
+}
+.card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.2);
+}
+.card h2, .card h3 {
+    font-family: var(--font-heading);
+    color: var(--neon-glow);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
+    margin-top: 0;
+}
+
+
+/* --- Tab Container Styling --- */
+.tab-container.full-height,
+.tab-container.flex-grow-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0; 
+    overflow: hidden; 
+    border: 2px solid var(--border-color);
+    min-height: 250px;
+}
+
+.tab-buttons {
+    display: flex;
+    padding: 0 0 0 20px;
+    flex-shrink: 0;
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--border-color);
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 0; 
+    background: transparent;
+    color: var(--muted-text);
+    font-weight: 500;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    background: rgba(30, 144, 255, 0.1);
+    border-bottom: 2px solid var(--primary-color);
+    font-weight: 700;
+    text-shadow: 0 0 5px var(--neon-glow);
+    z-index: 2; 
+}
+
+/* --- TAB CONTENT FIXES --- */
+.tab-content {
+    flex-grow: 1;
+    /* INCREASED PADDING TOP for gap between tab-line and h2 */
+    padding: 30px 20px 20px 20px; 
+    background: var(--card-bg); 
+    border-radius: 0 0 8px 8px;
+    display: none;
+    flex-direction: column; 
+    overflow-y: auto; 
+    min-height: 0; 
+}
+
+/* FIX: Ensure Coach tab is configured for correct vertical spacing */
+#coach-tab {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden; /* Chat history handles scroll, not the tab content */
+    padding-bottom: 5px; /* Added small bottom padding */
+}
+
+/* Fix: Analysis content is a block container for the word list and summary */
+.analysis-content {
+    /* Reverted to block and let the word list handle scroll, but ensures min-height:0 */
+    display: block; 
+    padding-top: 15px; /* Adjustment for analysis specific content */
+    overflow-y: auto; 
+}
+.analysis-content h2 {
+    /* Adjusted H2 margin to properly use the new padding top of the tab-content */
+    margin-top: 10px;
+}
+.progress-content {
+    display: flex; 
+    flex-direction: column; /* Ensure flex for chart sizing */
+    padding-top: 15px; 
+    overflow-y: hidden;
+}
+.progress-content h2 {
+    margin-top: 10px;
+}
+
+
+/* --- CHAT SECTION FIXES: Prevent cutoff at the bottom --- */
+.chat-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(30, 144, 255, 0.1);
+    font-family: var(--font-body);
+    min-height: 100px;
+}
+.chat-input-area {
+    display: flex;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+/* This div holds the three buttons at the bottom of the Coach AI tab */
+#coach-tab > div:last-child {
+    flex-shrink: 0; /* Critical: prevents buttons from being squeezed/cut */
+    padding-bottom: 5px; /* FIX: Added space below the last button row */
+}
+#coach-tab > div:last-child button {
+    margin: 5px 5px 0 0;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* --- Word List & Chart Sizing --- */
+#wordListContainer.word-list-table {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    min-height: 0; 
+}
+.chart-wrapper {
+    flex-grow: 1;
+    min-height: 0; 
+    padding-top: 10px;
+}
+#progressChart {
+    height: 100%; 
+    width: 100%;
+}
+
+/* --- General Button Styles --- */
+.buttons button,
+.word-actions button,
+.chat-input-area button,
+#auto-feedback-toggle,
+#copy-coach,
+#drillPanel button {
+    padding: 10px 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-family: var(--font-body);
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 5px var(--primary-color);
+    line-height: 1; 
+}
+
+/* ... (Existing button styles) ... */
+.buttons button:hover,
+.word-actions button:hover,
+.chat-input-area button:hover,
+#auto-feedback-toggle:hover,
+#copy-coach:hover,
+#drillPanel button:hover {
+    background: var(--primary-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--neon-button);
+}
+#recordBtn {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+    box-shadow: 0 0 5px var(--danger-color);
+}
+#recordBtn.recording {
+    animation: pulse 1.5s infinite;
+}
+/* Pulse animation for recording */
+@keyframes pulse {
+    0% { box-shadow: 0 0 5px var(--danger-color); }
+    50% { box-shadow: 0 0 20px var(--danger-color); }
+    100% { box-shadow: 0 0 5px var(--danger-color); }
+}
+.buttons button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+/* Input fields & Select - No Change */
+.sentence-text,
+.chat-input-area input,
+#lang {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: rgba(0,0,0,0.3);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: 1em;
+    flex-grow: 1; 
+}
+.sentence-text:focus,
+.chat-input-area input:focus,
+#lang:focus {
+    outline: none;
+    border-color: var(--neon-button);
+    box-shadow: 0 0 8px var(--neon-button);
+}
+
+/* Language Select - No Change */
+#lang {
+    margin-left: 10px;
+    cursor: pointer;
+    appearance: none; /* Hide default arrow */
+    /* Updated SVG fill color to match new neon glow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="%231E90FF" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 25px;
+}
+.sentence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+.controls {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* Results Section - No Change */
+.summary-line {
+    font-size: 1.1em;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.score-good { color: var(--success-color); }
+.score-medium { color: var(--warning-color); }
+.score-bad { color: var(--danger-color); }
+
+/* Word List - No Change */
+#wordListContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding-top: 15px;
+}
+.word-card {
+    background: rgba(0, 0, 0, 0.4);
+    border-left: 5px solid; /* For score color */
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 5px rgba(30, 144, 255, 0.1);
+}
+.word-header { /* Corrected class name */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-color);
+    margin-bottom: 5px;
+}
+.word-text {
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+.word-score {
+    font-weight: 700;
+}
+.word-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.word-actions button {
+    padding: 5px 8px !important;
+    font-size: 0.9em;
+    margin: 0 !important;
+    flex-grow: 1;
+    min-width: 0;
+}
+.phonemes-container { 
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+/* ================================================= */
+/* === FIX: PHONEME LINE LAYOUT TO PREVENT OVERLAP === */
+/* ================================================= */
+.phoneme-line {
+    display: grid; /* Use grid for structured columns */
+    /* Columns: Expected (flexible), Actual (flexible), Score (fixed narrow), Button (fixed narrow) */
+    grid-template-columns: minmax(80px, 1.5fr) minmax(80px, 1.5fr) 75px 40px; 
+    align-items: center;
+    gap: 8px; /* Gap between grid columns */
+    padding: 6px 0;
+    font-size: 0.9em;
+    border-bottom: 1px dotted rgba(30, 144, 255, 0.1); 
+}
+
+.phoneme-text {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.phoneme-score {
+    text-align: center;
+    font-weight: 700;
+}
+
+/* New: Container for the hint to prevent it from messing up the grid */
+.phoneme-hint-wrapper {
+    /* This must be appended after .phoneme-line in the JS */
+    display: flex;
+    flex-direction: column;
+    /* Does not use grid-column span here, as it's a sibling of .phoneme-line,
+      but a child of .phonemes-container (which is not a grid). */
+    padding-left: 5px; 
+    padding-top: 3px;
+    width: 100%; /* Ensure it uses full width under the grid line */
+}
+
+/* FIX: Style for the actual hint text */
+.phoneme-hint {
+    font-size: 0.85em; 
+    padding: 5px 8px;
+    background: rgba(30, 144, 255, 0.05); 
+    border-left: 2px solid var(--neon-glow);
+    margin-top: 5px;
+    margin-bottom: 5px; /* Added small margin to separate lines */
+}
+
+/* ================================================= */
+/* ================================================= */
+
+
+.coaching-tip {
+    font-size: 0.9em;
+    padding: 8px;
+    background: rgba(30, 144, 255, 0.1);
+    border-left: 3px solid var(--neon-glow);
+    margin-top: 10px;
+}
+
+/* Drill Mode Section - No Change */
+#drillPanel {
+    padding-top: 5px;
+}
+
+#drillPanel > div {
+    margin-bottom: 8px;
+}
+#drillPanel button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    margin: 0 4px 4px 0;
+}
+
+.phoneme-heatmap {
+    display: flex; /* Ensure heatmap phonemes are in a row/wrap */
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-top: 10px;
+}
+
+/* Style for individual phoneme boxes in the heatmap */
+.phoneme-box {
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s;
+}
+
+/* ----------------------------------------------------- */
+/* --- CHAT SECTION FIXES: Allow chat history to grow dynamically --- */
+/* ----------------------------------------------------- */
+.chat-card {
+    /* **FIX:** Use flex-grow to take up all remaining vertical space in .left-panel */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    /* **FIX:** Remove hardcoded height to allow dynamic resizing */
+    height: auto; 
+    min-height: 350px; /* Ensure a decent minimum size */
+}
+
+.chat-history {
+    /* **FIX:** Allow history to take all space between header and input area */
+    flex-grow: 1;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(30, 144, 255, 0.1);
+    font-family: var(--font-body);
+}
+.chat-history::-webkit-scrollbar { width: 5px; }
+.chat-history::-webkit-scrollbar-thumb { background: var(--neon-glow); border-radius: 3px;}
+.chat-user {
+    color: var(--warning-color);
+    margin-bottom: 6px;
+}
+.chat-bot {
+    color: var(--primary-color);
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+.chat-input-area {
+    display: flex;
+    margin-top: auto;
+}
+.chat-input-area input {
+    flex-grow: 1;
+    margin-right: 5px;
+    margin-bottom: 0;
+}
+.chat-input-area button {
+    margin: 0;
+    flex-shrink: 0;
+}
+/* Drill toggle and copy button */
+.chat-card > div:last-child button {
+    margin: 5px 5px 0 0;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* ----------------------------------------------------- */
+/* --- PROGRESS CARD FIXES: Ensure chart fills space --- */
+/* ----------------------------------------------------- */
+
+.progress-card {
+    /* Merged with .tab-container.flex-grow-card for the new design */
+    flex-grow: 1; 
+    min-height: 100px; 
+    display: flex; 
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Modal Styling (No Change) */
+.modal-overlay { 
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+.modal-content {
+    background: var(--card-bg);
+    border: 3px solid var(--neon-glow);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 450px;
+    box-shadow: 0 0 25px var(--neon-glow);
+    margin: 15vh auto;
+    animation: fadeInModal 0.3s ease-out; 
+    position: relative;
+}
+.modal-content h2 {
+    color: var(--neon-glow);
+    text-shadow: 0 0 5px var(--neon-glow);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--primary-color);
+    cursor: pointer;
+}
+.modal-close:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #fff;
+}
+/* Modal animation */
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .main-grid { 
+        grid-template-columns: 1fr; /* Stack on smaller screens */
+        height: auto;
+    }
+    /* Revert scroll behavior for mobile stacking */
+    .left-panel, .right-panel {
+        height: auto;
+        overflow-y: visible;
+        padding-right: 0; /* Remove padding when not needed for scrollbar */
+    }
+    .app-container {
+        height: auto;
+        padding-bottom: 20px;
+    }
+    .sentence-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .controls {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .buttons button {
+        flex: 1 1 30%;
+        min-width: 150px;
+    }
+}
