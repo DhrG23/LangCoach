@@ -517,7 +517,7 @@ chatbot = OllamaChatbot(OLLAMA_BASE_URL, OLLAMA_MODEL)
 @app.post("/chat")
 async def chat_endpoint(user_input: str = Form(...)):
     # Use the single, pre-existing chatbot instance.
-    reply = chatbot.chat(user_input,sysmsg="You are a helpful pronunciation coach and chatbot.")
+    reply = chatbot.chat(user_input)
     return JSONResponse({"response": reply})
 
 
@@ -938,8 +938,6 @@ async def chat_feedback(request: Request):
         # --- CORRECTED LINE ---
         # Use a keyword argument to correctly set stream=False
         resp = chatbot.chat(prompt,stream=True)
-
-        print(resp,type(resp))
         # If somehow it's still a generator, join it into a string
         if hasattr(resp, '__iter__') and not isinstance(resp, str):
             resp = "".join(resp)

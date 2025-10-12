@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           score: data.overall_score,
+        
           words: data.words,
           sentence: sentenceTextEl.value
         })
@@ -387,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
   try {
+    console.log("Playing slice from:", startTime, "to", endTime); 
     const arrayBuffer = await lastRecordedBlob.arrayBuffer();
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
