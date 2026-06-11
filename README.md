@@ -1,87 +1,94 @@
-# AI For Language💬✨
+# AI For Language 💬✨
 
-> **"Learn words, master pronunciation, and speak confidently — powered by AI!"**
-
-Welcome to **Our App**, an AI-driven language learning companion that helps you discover new words, understand their meanings, and perfect your pronunciation with *real-time feedback* and *interactive learning* 🎧📚  
+Learn words, master pronunciation, and speak confidently — a lightweight Electron app that combines speech recognition, phoneme analysis, and AI-generated feedback.
 
 ---
 
-## 🌟 Overview
+**Quick summary:** This repo contains a small Electron-based frontend and a Python backend for phoneme/tips support and analytics.
 
-**Our App** combines the power of **AI**, **Speech Recognition**, and **Phoneme Analysis** to make learning languages *fun*, *inclusive*, and *impactful*.  
-It helps learners of all levels speak naturally by identifying pronunciation errors and providing instant, friendly feedback.  
+**Project structure**
 
-Whether you’re learning **Japanese**, **Korean**, **Spanish**, or **English**, Our App becomes your personal pronunciation coach 🗣️💡  
-
----
-
-## 🧠 
-
-### 🎧 Real-Time Pronunciation Feedback
-- Speak words and get instant accuracy scores.
-- AI compares your pronunciation to native-level references.
-- Get phoneme-level correction:  
-  _“Try rolling the R softly!”_ 💬
-
-### 📚 Smart Vocabulary Trainer
-- Learn new words daily with meaning, usage, and examples.
-- Context-based examples make memorization easy.
-
-### 🧠 Adaptive Learning System
-- Tracks your weak sounds and focuses on improving them.
-- Personalized practice sessions that evolve with your progress.
-
-### 💬 Conversational Mode (Optional)
-- Talk with your AI buddy in the target language.
-- Receive gentle corrections during casual conversations.
-
-### 🎙️ TTS & STT Integration
-- Listen to perfect pronunciation via **TTS (Text-to-Speech)**.
-- Speak and get transcribed using **Whisper (STT)**.
-
-### 🎭 Dual Persona Modes
-- 🌸 **Angel Mode:** Encouraging and polite feedback.  
-- 🔥 **Demon Mode:** Playfully challenges you to improve!
-
----
-
-## 🧩 Tech Stack
-
-| Component | Technology |
-|------------|-------------|
-| **Frontend** | Flask / Streamlit / React (optional) |
-| **Backend** | Python (FastAPI / Flask) |
-| **Speech Recognition** | Whisper / Whisper.cpp |
-| **Text-to-Speech** | Piper / Jenny / ElevenLabs |
-| **Phoneme Extraction** | Phonemizer / Montreal Forced Aligner |
-| **Feedback Logic** | Dynamic Time Warping (DTW) + Mini LLM |
-| **Database** | SQLite / JSON |
-| **AI Model** | Mistral / Phi-3 / Gemma (via Ollama or API) |
-
----
-
-## 🧭 System Flow
-
-```mermaid
-flowchart TD
-    subgraph Input
-        A[User Speaks Word 🎙️]
-    end
-
-    subgraph Reference
-        Z[Word Text (e.g., "Hello") 📝] --> Z1[Target Phonemes (from Dictionary) 🎯]
-    end
-
-    A --> B{Whisper STT / Speech Intent 🧠}
-    B --> Z
-    
-    A --> C[Phoneme Extractor / Forced Aligner 🔊➡️🔡]
-    Z --> C
-    
-    C --> D[User Phonemes (Acoustic Features) 🗣️]
-    Z1 --> E[Phoneme Comparison DTW ⚖️]
-    D --> E
-    
-    E --> F[LLM Feedback Generator 💬]
-    F --> G[UI Response ✨]
 ```
+main.js
+preload.js
+package.json
+renderer/
+    index.html
+    renderer.js
+    style.css
+assets/
+    sample_sentences.json
+    phoneme/
+backend/
+    server.py
+    requirements.txt
+    phoneme_tips.json
+    chat_history.json
+    last_score.json
+```
+
+---
+
+## Prerequisites
+
+- Node.js (v16+ recommended) and npm
+- Python 3.8+ and pip
+
+Optional: create a Python virtual environment for the backend.
+
+---
+
+## Install & Run (Development)
+
+1. Install backend dependencies and start the backend server:
+
+```powershell
+cd backend
+python -m venv .venv   # optional
+.\.venv\Scripts\Activate  # on Windows
+pip install -r requirements.txt
+python server.py
+```
+
+2. Install frontend dependencies and start the Electron app:
+
+```powershell
+cd ..
+npm install
+npm start
+```
+
+The app window is frameless; window controls are implemented via `preload.js` and IPC handlers in `main.js`.
+
+---
+
+## Features
+
+- Real-time pronunciation scoring (STT + phoneme analysis)
+- Phoneme-level tips (backend JSON + heuristics)
+- Simple vocabulary/usage examples in `assets/sample_sentences.json`
+
+---
+
+## Development Notes
+
+- Frontend: `renderer/` — HTML, CSS, and client JS for UI.
+- Electron main process: `main.js` — window creation and IPC handlers.
+- Preload: `preload.js` — exposes safe APIs for window controls.
+- Backend: `backend/server.py` — lightweight API serving phoneme tips and history.
+
+If you change backend ports or endpoints, update `renderer/renderer.js` accordingly.
+
+---
+
+## Contributing
+
+1. Fork and create a branch
+2. Make changes and add tests where appropriate
+3. Open a PR with a clear description
+
+---
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
